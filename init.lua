@@ -1000,5 +1000,32 @@ require('lazy').setup({
   },
 })
 
+-- Set foldmethod to 'marker' (if using {{{ }}} markers) or your preferred method
+vim.opt.foldmethod = 'marker' -- or "expr", "indent", etc.
+vim.opt.foldtext = 'v:lua.custom_fold_text()' -- Assign your custom function
+
+-- kassadin
+function _G.custom_fold_text()
+  local fold_start = vim.v.foldstart
+  local first_line = vim.fn.getline(fold_start)
+  first_line = first_line:gsub('\t', string.rep(' ', vim.o.tabstop))
+  first_line = first_line:gsub('{{{', '')
+
+  -- Get the next line (title line)
+  local title_line = vim.fn.getline(fold_start + 1)
+  title_line = vim.fn.trim(title_line)
+
+  local last_line = vim.fn.trim(vim.fn.getline(vim.v.foldend))
+  last_line = last_line:gsub('}}}', '')
+
+  -- local line_count = vim.v.foldend - vim.v.foldstart + 1
+
+  -- Combine the fold marker line and the title line
+  return ' 󱈤  ' .. first_line .. ' ' .. title_line .. ' ' .. last_line
+  -- return ' 󰁋  ' .. first_line .. ' ' .. title_line .. ' ' .. last_line
+end
+
+vim.keymap.set('n', '<C-f>', 'za', { desc = 'toggle fold' })
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
