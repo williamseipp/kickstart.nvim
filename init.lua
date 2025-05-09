@@ -240,7 +240,6 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
-  'norcalli/nvim-colorizer.lua',
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -888,6 +887,14 @@ require('lazy').setup({
       vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Normal' })
     end,
   },
+  {
+    'norcalli/nvim-colorizer.lua',
+    config = function()
+      require('colorizer').setup()
+    end,
+  },
+
+  ------------------------------------------------------------------------
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
@@ -968,7 +975,6 @@ require('lazy').setup({
   -- require 'kickstart.plugins.lint',
   -- require 'kickstart.plugins.autopairs',
   --
-  --kassadin plugins
   require 'kickstart.plugins.neo-tree',
   require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
@@ -1008,7 +1014,7 @@ require('lazy').setup({
 vim.opt.foldmethod = 'marker' -- or "expr", "indent", etc.
 vim.opt.foldtext = 'v:lua.custom_fold_text()' -- Assign your custom function
 
--- kassadin
+-- kassadin custom stuff
 function _G.custom_fold_text()
   local fold_start = vim.v.foldstart
   local first_line = vim.fn.getline(fold_start)
@@ -1031,5 +1037,6 @@ end
 
 vim.keymap.set('n', '<C-f>', 'za', { desc = 'toggle fold' })
 
+vim.o.laststatus = 0
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
