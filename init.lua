@@ -199,6 +199,7 @@ vim.keymap.set('n', '<leader>w', ':w<CR>', { desc = 'Move focus to the upper win
 vim.keymap.set('n', '<leader>q', ':q!<CR>', { desc = 'Move focus to the upper window' })
 vim.keymap.set('n', '<leader>e', '<Cmd>Neotree toggle<CR>', { desc = 'open/close file explroer' })
 
+vim.keymap.set('n', '<leader>t', ':ToggleTerm size=20 direction=horizontal name=home<CR>', { desc = 'open/close terminal' })
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -874,9 +875,11 @@ require('lazy').setup({
       require('github-theme').setup {
         -- ...
       }
-
-      --vim.cmd 'colorscheme github_dark'
     end,
+  },
+  {
+    { 'akinsho/toggleterm.nvim', version = '*', config = true },
+    -- or
   },
   {
     'ggandor/leap.nvim',
@@ -885,7 +888,6 @@ require('lazy').setup({
       vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Normal' })
     end,
   },
-
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
